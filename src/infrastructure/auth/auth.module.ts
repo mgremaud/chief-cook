@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth/auth.service';
-import { GoogleStrategy } from './auth/google.strategy';
+import { AuthService } from './auth.service';
+import { GoogleStrategy } from './google.strategy';
 import { ConfigModule } from '@nestjs/config';
-import { JwtStrategy } from './auth/jwt.strategy';
+import { JwtStrategy } from './jwt.strategy';
+import { AuthController } from '../../ui/http/rest/auth/auth.controller';
 
 @Module({
   imports: [ConfigModule],

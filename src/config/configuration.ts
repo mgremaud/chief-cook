@@ -1,8 +1,10 @@
-export default (): object => ({
+import { ConfigurationInterface } from './configuration.interface';
+
+export default (): ConfigurationInterface => ({
   port: parseInt(process.env.PORT, 10) || 3000,
   auth: {
-    clientID    : process.env.CLIENT_ID,     // <- Replace this with your client id
-    clientSecret: process.env.CLIENT_SECRET, // <- Replace this with your client secret
+    clientID    : process.env.CLIENT_ID,
+    clientSecret: process.env.CLIENT_SECRET,
     callbackURL : process.env.CALLBACK_URL,
   }
 });

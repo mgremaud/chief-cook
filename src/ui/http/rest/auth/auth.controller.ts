@@ -1,11 +1,9 @@
-import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Req, UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ConfigService } from '@nestjs/config';
+import { RequestInterface } from '../../../../domain/auth/request.interface';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly configService: ConfigService) {}
-
   @Get('google')
   @UseGuards(AuthGuard('google'))
   googleLogin(): void
@@ -15,14 +13,14 @@ export class AuthController {
 
   @Get('google/callback')
   @UseGuards(AuthGuard('google'))
-  googleLoginCallback(@Req() req, @Res() res): void
+  googleLoginCallback(@Req() req: RequestInterface): string
   {
     // handles the Google OAuth2 callback
     const jwt: string = req.user.jwt;
     if (jwt)
-      res.redirect(this.configService.get<string>('LOGIN_SUCCESS_REDIRECTION') + jwt);
+      return jwt;
     else
-      res.redirect(this.configService.get<string>('LOGIN_FAILURE_REDIRECTION'));
+      return null;
   }
 
   @Get('protected')

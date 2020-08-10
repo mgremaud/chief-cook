@@ -28,8 +28,7 @@ export class AuthService {
         provider
       }
 
-      const jwt: string = sign(payload, this.configService.get<string>('JWT_SECRET_KEY'), { expiresIn: 3600 });
-      return jwt;
+      return(sign(payload, this.configService.get<string>('JWT_SECRET_KEY'), { expiresIn: 3600 }));
     }
     catch (err) {
       throw new InternalServerErrorException('validateOAuthLogin', err.message);
