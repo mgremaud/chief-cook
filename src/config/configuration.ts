@@ -1,7 +1,7 @@
 import { ConfigurationInterface } from './configuration.interface';
 
 export default (): ConfigurationInterface => ({
-  port: parseInt(process.env.PORT, 10) || 3000,
+  port: parseInt(process.env.PORT, 10) || 5000,
   auth: {
     clientID    : process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,

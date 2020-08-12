@@ -24,7 +24,7 @@ export class JwtStrategy extends PassportStrategy(Strategy, 'jwt')
       // const validClaims = await this.authService.verifyTokenClaims(payload);
       // if (!validClaims)
       //    return done(new UnauthorizedException('invalid token claims'), false);
-
+      console.log(payload);
       done(null, payload);
     }
     catch (err) {

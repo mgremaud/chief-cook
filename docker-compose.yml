@@ -1,0 +1,59 @@
+version: '3.4'
+
+services:
+  chief-node:
+    build:
+      context: "./docker/node/12.18.3"
+      target: "init"
+    container_name: "chief-node"
+    working_dir: "/var/www"
+    user: "node"
+    depends_on:
+      - chief-db
+    volumes:
+      - ".:/var/www"
+    environment:
+      DB_HOST: "chief-db"
+      DB_PORT: 3306
+      DB_USER: "root"
+      DB_PASSWORD: "toor"
+      DB_DATABASE: "chief_cook"
+      PORT: 5000
+    ports:
+      - "5000:5000"
+    networks:
+      - "default"
+    command: "sh -c ' \
+      cd /var/www && \
+      yarn install && \
+      pm2 start \"npm run start:dev\" --name chief-cook && \
+      pm2 logs \
+    '"
+
+  chief-db:
+    image: "mariadb"
+    container_name: "chief-db"
+    hostname: "chief-db"
+    restart: "no"
+    environment:
+      MYSQL_ROOT_PASSWORD: "toor"
+      MYSQL_DATABASE: "chief_cook"
+    ports:
+      - "3306:3306"
+    networks:
+      - "default"
+    volumes:
+      - "./var/mysql:/var/lib/mysql"
+
+  chief-adminer:
+    image: "adminer"
+    container_name: "chief-adminer"
+    hostname: "chief-adminer"
+    ports:
+      - "8080:8080"
+    networks:
+      - "default"
+
+networks:
+  default:
+    driver: "bridge"
